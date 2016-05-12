@@ -4,18 +4,14 @@
 
 #include "NetworkListener.h"
 
-NetworkListener::NetworkListener() {
+
+void NetworkListener::waitForClient() {
 
 }
 
-void NetworkListener::waitForAudio() {
+NetworkListener::NetworkListener(int fd, int port) {
 
 }
-
-void NetworkListener::waitForVideo() {
-
-}
-
 
 
 

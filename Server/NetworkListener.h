@@ -8,14 +8,11 @@
 
 
 class NetworkListener {
-    NetworkListener();
-    void waitForAudio();
-    void waitForVideo();
+    NetworkListener(int fd, int port);
+    void waitForClient();
 private:
-    int audioSocketFd;
-    int audioPort;
-    int videoSocketFd;
-    int videoPort;
+    int socketFd;
+    int socketPort;
 };
 
 
