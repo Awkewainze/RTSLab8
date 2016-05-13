@@ -37,6 +37,9 @@ void AudioRecorder::record() {
             // Write to the file.
             rc = write( buffer, bufferSize);
             //TODO - send to server
+            sender->sendDataToServer(buffer);
+            //TODO - problem is here
+
             bytesToCapture-=bufferSize;
 
 
