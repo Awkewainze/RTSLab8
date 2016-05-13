@@ -14,9 +14,10 @@ using namespace std;
 
 
 
-void runAudio(char* port){
-    AudioPlayer player("plughw:1");
+void runAudio(char* audioDeviceName, char* port){
+    AudioPlayer player(audioDeviceName);
     NetworkListener audioListener(port, player);
+
 
     audioListener.getDataFromClient();
 }
@@ -24,7 +25,7 @@ void runAudio(char* port){
 void runVideo(char* port){
     VideoPlayer player();
     NetworkListener videoListener(port, player);
-
+s
     videoListener.getDataFromClient();
 }
 

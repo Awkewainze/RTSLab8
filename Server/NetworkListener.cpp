@@ -38,7 +38,7 @@ NetworkListener::NetworkListener(const char* port, Player player) {
 
 void NetworkListener::getDataFromClient() {
     // Listen on the socket for an incoming connection.  The parameter is the number of connections that can be waiting / queued up.  5 is the maximum allowed by most systems.
-    listen(socketFd ,5);
+    listen(socketFd, 5);
     clilen = sizeof(cli_addr);
 
     // Block until a client has connected to the server.  This returns a file descriptor for the connection.
@@ -46,19 +46,19 @@ void NetworkListener::getDataFromClient() {
                        (struct sockaddr *) &cli_addr,
                        &clilen);
     // If the return is less than 0l, there is an error.
-    if (newsockfd < 0)
-    {
+    if (newsockfd < 0) {
         error("ERROR on accept");
     }
-    // Fill the buffer with all zeros.
-    memset(&buffer[0], 0, sizeof(buffer));
+    while (true){
+        // Fill the buffer with all zeros.
+        memset(&buffer[0], 0, sizeof(buffer));
 
-    // Read from the buffer when data arrives.  The max that can be read is 255.
-    int n = read(newsockfd, buffer, sizeof(buffer)-1);
-    if (n < 0) {error("ERROR reading from socket");}
+        // Read from the buffer when data arrives.  The max that can be read is 255.
+        int n = read(newsockfd, buffer, sizeof(buffer) - 1);
+        if (n < 0) { error("ERROR reading from socket"); }
 
-    player.play(buffer, n);
-
+        player.play(buffer, n);
+    }
 }
 
 /*
