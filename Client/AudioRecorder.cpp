@@ -48,12 +48,12 @@ void AudioRecorder::record() {
     }
 }
 
-thread AudioRecorder::getThread() {
+std::thread* AudioRecorder::getThread() {
     return thread;
 }
 void AudioRecorder::stop() {
     threadRunning = false;
 }
 void AudioRecorder::start() {
-    thread (record);
+    thread = std::thread (record);
 }

@@ -13,7 +13,7 @@ public:
     AudioRecorder(char*,int);
     ~AudioRecorder();
     void record();
-    void getThread();
+    std::thread* getThread();
     void start();
     void stop();
     void getData();
@@ -22,6 +22,7 @@ private:
     char* buffer;
     int bufferSize;
     int secondsToCapture;
+    NetworkSender* sender;
 };
 
 

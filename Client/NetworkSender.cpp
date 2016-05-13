@@ -25,7 +25,7 @@ NetworkSender::NetworkSender(const char *port,char *serverName) {
     memset((void*) &serv_addr, 0, sizeof(serv_addr));
 
     // Obtain the port number as an integer.
-    socketPort = atoi(port);
+    sockport = atoi(port);
 
     // Setup the server address structure.
     serv_addr.sin_family = AF_INET;
@@ -44,7 +44,7 @@ NetworkSender::NetworkSender(const char *port,char *serverName) {
 void NetworkSender::sendDataToServer(char *data) {
 
     //memset((void*)&buffer[0], 0, sizeof(buffer));
-    n = write(sockfd,data,255);
+    int n = write(sockfd,data,255);
 
     // iF N IS LESS THAN 0, AN ERROR HAS OCCURRED WRITING TO THE SOCKET.
     if (n < 0)

@@ -9,11 +9,10 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
-#include <string.h>
 #include <stdlib.h>
-#include "Recorder.h"
-#include "VideoRecorder.h"
-#include "AudioRecorder.h"
+#include <string.h>
+#include <netdb.h>
+
 class NetworkSender {
 
 public:
@@ -22,11 +21,11 @@ public:
 private:
     void error(char* msg);
     char buffer[256];
-    int socketFd;
-    int socketPort;
+    int sockfd;
+    int sockport;
     int newsockfd;
     socklen_t clilen;
-
+    struct hostent *server;
     struct sockaddr_in serv_addr, cli_addr;
 
 };

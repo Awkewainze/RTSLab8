@@ -24,9 +24,9 @@ void runAudio(char* audioDeviceName, char* port){
 
 void runVideo(char* port){
     VideoPlayer player();
-    NetworkListener videoListener(port, player);
+    //NetworkListener videoListener(port, player);
 
-    videoListener.getDataFromClient();
+   // videoListener.getDataFromClient();
 }
 
 
