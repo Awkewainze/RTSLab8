@@ -5,6 +5,7 @@
 
 #include "AudioRecorder.h"
 #include <alsa/asoundlib.h>
+#include <cstdlib>
 
 #define SAMPLING_RATE (22500)
 #define NUMBER_OF_CHANNELS (2)
@@ -24,7 +25,6 @@ AudioRecorder::~AudioRecorder() {
 }
 void AudioRecorder::record() {
     while (threadRunning){
-        rc = 1;
         // Determine how many bytes need to be captured.
         int bytesToCapture = SAMPLING_RATE * secondsToCapture * NUMBER_OF_CHANNELS * BYTES_PER_SAMPLE;
         do {
@@ -35,12 +35,12 @@ void AudioRecorder::record() {
             ai->read(buffer);
 
             // Write to the file.
-            rc = write( buffer, bufferSize);
+            ai->write( buffer, bufferSize);
             //TODO - send to server
             bytesToCapture-=bufferSize;
 
 
-        } while ((bytesToCapture > 0)&&(rc>0));
+        } while (bytesToCapture > 0);
         threadRunning = false;
     }
 }

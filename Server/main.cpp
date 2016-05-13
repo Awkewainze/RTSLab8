@@ -1,4 +1,9 @@
 #include <iostream>
+#include "NetworkListener.h"
+#include "AudioPlayer.h"
+#include "VideoPlayer.h"
+#include "Player.h"
+#include <thread>
 
 using namespace std;
 // Computer
@@ -6,18 +11,8 @@ using namespace std;
 // On Qt gui
 // Play sound
 // From network
-#include "NetworkListener.h"
-#include "AudioPlayer.h"
-#include "VideoPlayer.h"
-#include "Player.h"
-
-// run with 'avserver <audio playback hardware> <audio port> <video port>'
-int main(int argc, char* argv[]) {
 
 
-    //create audio thread
-    //create video thread
-}
 
 void runAudio(char* port){
     AudioPlayer player("plughw:1");
@@ -27,5 +22,22 @@ void runAudio(char* port){
 }
 
 void runVideo(char* port){
+    VideoPlayer player();
+    NetworkListener videoListener(port, player);
 
+    videoListener.getDataFromClient();
+}
+
+
+// run with 'avserver <audio playback hardware> <audio port> <video port>'
+int main(int argc, char* argv[]) {
+
+
+    thread audio(runAudio, argv[1], argv[2]);
+    thread video(runVideo, argv[3]);
+
+    audio.join();
+    video.join();
+
+    return 0;
 }
