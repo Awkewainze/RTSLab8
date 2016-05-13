@@ -4,7 +4,7 @@
 
 #include "Player.h"
 
-void Player::play() {
+void Player::play(char* source, int length) {
 
 }
 
