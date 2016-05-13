@@ -9,6 +9,7 @@
 #include <alsa/asoundlib.h>
 
 class AudioPlayer : public Player{
+public:
     AudioPlayer(char* playbackHardware);
     ~AudioPlayer();
     void play(char* source, int length);

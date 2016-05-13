@@ -7,7 +7,8 @@
 
 
 class Player {
-    virtual void play();
+public:
+    virtual void play(char* source, int length);
 
 };
 

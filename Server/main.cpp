@@ -12,20 +12,20 @@ using namespace std;
 #include "Player.h"
 
 // run with 'avserver <audio playback hardware> <audio port> <video port>'
-int main() {
+int main(int argc, char* argv[]) {
 
 
     //create audio thread
     //create video thread
 }
 
-void runAudio(){
-    //create network listener with audio port
-    //create audio player
-    //open player
-    //
+void runAudio(char* port){
+    AudioPlayer player("plughw:1");
+    NetworkListener audioListener(port, player);
+
+    audioListener.getDataFromClient();
 }
 
-void runVideo(){
+void runVideo(char* port){
 
 }
