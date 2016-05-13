@@ -16,9 +16,10 @@ public:
     virtual void getThread();
     virtual void record();
     virtual void getData();
+    std::thread thread;
+    bool threadRunning;
 private:
     NetworkSender* sender;
-    std::thread thread;
 };
 
 

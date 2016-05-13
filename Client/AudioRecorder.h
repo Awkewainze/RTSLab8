@@ -7,9 +7,16 @@
 
 
 #include "Recorder.h"
-
+#include "../AudioReferenceFiles/AudioInterface.h"
 class AudioRecorder: Recorder {
+public:
+    AudioRecorder(char*,int);
+    ~AudioRecorder();
 
+private:
+    AudioInterface *ai;
+    char* buffer;
+    int bufferSie;
 };
 
 
