@@ -3,3 +3,8 @@
 //
 
 #include "VideoPlayer.h"
+
+
+void VideoPlayer::play(char* source, int length){
+
+}

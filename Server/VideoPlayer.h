@@ -7,7 +7,7 @@
 #include "Player.h"
 
 class VideoPlayer : public Player {
-
+    void play(char* source, int length);
 };
 
 
