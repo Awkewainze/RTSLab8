@@ -12,11 +12,16 @@ class AudioRecorder: Recorder {
 public:
     AudioRecorder(char*,int);
     ~AudioRecorder();
-
+    void record();
+    void getThread();
+    void start();
+    void stop();
+    void getData();
 private:
     AudioInterface *ai;
     char* buffer;
-    int bufferSie;
+    int bufferSize;
+    int secondsToCapture;
 };
 
 

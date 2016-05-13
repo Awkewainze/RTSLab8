@@ -13,9 +13,10 @@
 AudioRecorder::AudioRecorder(char *deviceName, int duration) {
     ai = new AudioInterface(deviceName,SAMPLING_RATE,NUMBER_OF_CHANNELS,SND_PCM_STREAM_CAPTURE);
     ai->open();
-    bufferSie = ai->getRequiredBufferSize();
-    buffer = (char*)malloc(bufferSie);
+    bufferSize = ai->getRequiredBufferSize();
+    buffer = (char*)malloc(bufferSize);
     threadRunning = true;
+    secondsToCapture = duration;
 }
 AudioRecorder::~AudioRecorder() {
     ai->close();
