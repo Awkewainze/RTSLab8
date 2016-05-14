@@ -4,51 +4,49 @@
 
 #include "NetworkSender.h"
 
-NetworkSender::NetworkSender(const char *port,char *serverName) {
-    sockfd = socket(AF_INET, SOCK_STREAM, 0);
+NetworkSender::NetworkSender(const char *ip,const char *p) {
+    //obtain port number
+    port = atoi(p);
 
-    // If the return is less than 0, then the socket failed to create.
-    if (sockfd < 0)
+    //create the socket
+    sock_fd = socket(AF_INET,SOCK_STREAM,0);
+    if(sock_fd < 0)
+        error("Error opening socket");
+
+    //The machine that will receive the data
+    server = gethostbyname(ip);
+    if (server == NULL)
     {
-        error("ERROR opening socket");
-    }
-
-    // Get the hostname.
-    server = gethostbyname(serverName);
-    // If the server is NULL, there is no such host.
-    if (server == NULL) {
-        fprintf(stderr,"ERROR, no such host\n");
+        fprintf(stderr,"ERROR, no such host");
         exit(0);
     }
 
-    // Initialize the buffer to all zeros.
-    memset((void*) &serv_addr, 0, sizeof(serv_addr));
+    //Fill the buffer with zeros
+    memset((void*)&serv_addr,0, sizeof(serv_addr));
 
-    // Obtain the port number as an integer.
-    sockport = atoi(port);
-
-    // Setup the server address structure.
+    //Set the address type
     serv_addr.sin_family = AF_INET;
-    serv_addr.sin_addr.s_addr = INADDR_ANY;
-    serv_addr.sin_port = htons(socketPort);
 
-    memcpy((void*)&serv_addr.sin_addr.s_addr,(void*)server->h_addr, server->h_length);
+    //Copy data
 
-    // Connect to Socket
-    if (connect(sockfd,(struct sockaddr*)&serv_addr,sizeof(serv_addr)) < 0)
-    {
+    memcpy((void*)&serv_addr.sin_addr.s_addr,(void*)server->h_addr,server->h_length);
+
+    //Set host byte order to network byte order
+    serv_addr.sin_port = htons(port);
+
+    //Connect the socket
+    if (connect(sock_fd,(struct sockaddr*)&serv_addr,sizeof(serv_addr)) < 0)
         error("ERROR connecting");
-    }
 }
 
 void NetworkSender::sendDataToServer(char *data) {
+    //Send the data
+    return_val = write(sock_fd,&buffer[0],0,strlen(buffer));
 
-    //memset((void*)&buffer[0], 0, sizeof(buffer));
-    int n = write(sockfd,data,255);
-
-    // iF N IS LESS THAN 0, AN ERROR HAS OCCURRED WRITING TO THE SOCKET.
-    if (n < 0)
-    {
-        error("ERROR writing to socket");
-    }
+    if (return_val < 0)
+        error("ERROR reading from socket");
+}
+void NetworkSender::error(char *msg) {
+    perror(msg);
+    exit(0);
 }

@@ -9,24 +9,23 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
-#include <stdlib.h>
-#include <string.h>
 #include <netdb.h>
-
+#include <string.h>
+#include <stdlib.h>
+#include <ws2tcpip.h>
+#include "Recorder.h"
+#include "AudioRecorder.h"
 class NetworkSender {
 
 public:
-    NetworkSender(const char* port, char*);
+    NetworkSender(const char *ip, const char *port);
     void sendDataToServer(char*);
 private:
     void error(char* msg);
     char buffer[256];
-    int sockfd;
-    int sockport;
-    int newsockfd;
-    socklen_t clilen;
+    int sock_fd,port,return_val;
+    struct sockaddr_in serv_addr;
     struct hostent *server;
-    struct sockaddr_in serv_addr, cli_addr;
 
 };
 
