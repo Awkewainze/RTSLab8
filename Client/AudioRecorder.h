@@ -8,7 +8,7 @@
 
 #include "Recorder.h"
 #include "../AudioReferenceFiles/AudioInterface.h"
-#include <thread>
+#include <alsa/asoundlib.h>
 
 using namespace std;
 class AudioRecorder: Recorder {
@@ -16,10 +16,6 @@ public:
     AudioRecorder(char*,int,NetworkSender*);
     ~AudioRecorder();
     void record();
-    std::thread getThread();
-    void start();
-    void stop();
-    void getData();
 private:
     AudioInterface *ai;
     char* buffer;

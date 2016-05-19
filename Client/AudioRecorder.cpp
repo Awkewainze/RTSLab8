@@ -16,7 +16,6 @@ AudioRecorder::AudioRecorder(char *deviceName, int duration,NetworkSender *netwo
     ai->open();
     bufferSize = ai->getRequiredBufferSize();
     buffer = (char*)malloc(bufferSize);
-    threadRunning = true;
     secondsToCapture = duration;
     sender = networkSender;
 }
@@ -25,7 +24,6 @@ AudioRecorder::~AudioRecorder() {
     delete ai;
 }
 void AudioRecorder::record() {
-    while (threadRunning){
         int rc = 1;
         // Determine how many bytes need to be captured.
         int bytesToCapture = SAMPLING_RATE * secondsToCapture * NUMBER_OF_CHANNELS * BYTES_PER_SAMPLE;
@@ -44,16 +42,4 @@ void AudioRecorder::record() {
 
 
         } while ((bytesToCapture > 0)&&(rc>0));
-        threadRunning = false;
-    }
-}
-
-std::thread AudioRecorder::getThread() {
-    return thread;
-}
-void AudioRecorder::stop() {
-    threadRunning = false;
-}
-void AudioRecorder::start() {
-    thread (record);
 }

@@ -10,6 +10,9 @@ using namespace std;
 // Send to server
 
 // run with 'avclient <audio capture device> <destination hostname> <destination audio port> <destination video port> <length of time to send in seconds>'
+void runAudio(AudioRecorder recorder){
+	recorder.record();
+}
 int main(int argc, char*argv[]) {
 
 
@@ -20,14 +23,14 @@ int main(int argc, char*argv[]) {
     }
     NetworkSender *sender = new NetworkSender(argv[2],argv[3]);
     AudioRecorder audioRecorder(argv[1],atoi(argv[4]),sender);
-    VideoRecorder videoRecorder(240,160,sender);
+//    VideoRecorder videoRecorder(240,160,sender);
 
-    std::thread audioThread (audioRecorder.record());
-    std::thread videoThread (videoRecorder.record());
+    thread audioThread (runAudio,audioRecorder);
+//    std::thread videoThread (videoRecorder.record());
 
     audioThread.join();
-    videoRecorder.stop();
-    videoThread.join();
+//    videoRecorder.stop();
+//    videoThread.join();
 
     return 0;
 }
