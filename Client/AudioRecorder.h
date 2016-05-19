@@ -8,12 +8,15 @@
 
 #include "Recorder.h"
 #include "../AudioReferenceFiles/AudioInterface.h"
+#include <thread>
+
+using namespace std;
 class AudioRecorder: Recorder {
 public:
-    AudioRecorder(char*,int);
+    AudioRecorder(char*,int,NetworkSender*);
     ~AudioRecorder();
     void record();
-    std::thread* getThread();
+    std::thread getThread();
     void start();
     void stop();
     void getData();
@@ -22,7 +25,7 @@ private:
     char* buffer;
     int bufferSize;
     int secondsToCapture;
-    NetworkSender* sender;
+
 };
 
 

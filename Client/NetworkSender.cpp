@@ -3,9 +3,7 @@
 //
 
 #include "NetworkSender.h"
-#include "unistd.h"
-#include <iostream>
-using namespace std;
+
 NetworkSender::NetworkSender(const char *ip,const char *p) {
     //obtain port number
     port = atoi(p);
@@ -43,8 +41,8 @@ NetworkSender::NetworkSender(const char *ip,const char *p) {
 
 void NetworkSender::sendDataToServer(char *data) {
     //Send the data
-  return_val = write(sock_fd,data,strlen(data));
-	cout << data <<endl;
+    return_val = write(sock_fd,&buffer[0],0,strlen(buffer));
+
     if (return_val < 0)
         error("ERROR reading from socket");
 }
