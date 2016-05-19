@@ -12,19 +12,16 @@ using namespace std;
 // Play sound
 // From network
 
-
-
 void runAudio(char* audioDeviceName, char* port){
     AudioPlayer player(audioDeviceName);
     NetworkListener audioListener(port, player);
-
 
     audioListener.getDataFromClient();
 }
 
 void runVideo(char* port){
     VideoPlayer player();
-    //NetworkListener videoListener(port, player);
+    NetworkListener videoListener(port, player);
 
    // videoListener.getDataFromClient();
 }
