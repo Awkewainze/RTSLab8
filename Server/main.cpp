@@ -1,4 +1,5 @@
 #include <iostream>
+#include <QApplication>
 #include "NetworkListener.h"
 #include "AudioPlayer.h"
 #include "VideoPlayer.h"
@@ -21,7 +22,7 @@ void runAudio(char* audioDeviceName, char* port){
 
 void runVideo(char* port){
     int argc = 0;
-    char* argv[];
+    char* argv[0];
     QApplication a(argc, argv);
     VideoPlayer player;
     player.show();
@@ -36,7 +37,7 @@ void runVideo(char* port){
 
 
 // run with 'avserver <audio playback hardware> <audio port> <video port>'
-int main(int argc, char* argv[]) {
+int main(int argc, char** argv) {
 
 
     thread audio(runAudio, argv[1], argv[2]);

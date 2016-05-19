@@ -10,6 +10,12 @@
 #include <QWidget>
 #include <QVBoxLayout>
 #include <QPushButton>
+#include <QAction>
+#include <QLabel>
+#include <QMenu>
+#include <QScrollArea>
+#include <QScrollBar>
+#include <QPrintDialog>
 
 class QAction;
 class QLabel;
@@ -17,11 +23,13 @@ class QMenu;
 class QScrollArea;
 class QScrollBar;
 
-class VideoPlayer : public Player, public QMainWindow {
+class VideoPlayer : public QMainWindow, public Player{
     Q_OBJECT
 public:
     VideoPlayer();
     void play(char* source, int length);
+    int image_width;
+    int image_height;
 private slots:
     void print();
     void zoomIn();
@@ -61,6 +69,3 @@ private:
 };
 
 #endif
-
-
-#endif //SERVER_VIDEOPLAYER_H

@@ -17,6 +17,8 @@
  */
 VideoPlayer::VideoPlayer()
 {
+    image_width = 100;
+    image_height = 100;
     imageLabel = new QLabel;
     imageLabel->setBackgroundRole(QPalette::Base);
     imageLabel->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
@@ -32,9 +34,7 @@ VideoPlayer::VideoPlayer()
     layoutWidget->setLayout(layout);
     setCentralWidget(layoutWidget);
 
-    connect(speakButton, SIGNAL(clicked()), this, SLOT(speak()));
     createActions();
-    createMenus();
     setWindowTitle(tr("Image Viewer"));
     resize(500, 400);
 }
@@ -114,10 +114,6 @@ void VideoPlayer::fitToWindow()
 //Creates the actions and links the signals to slots for the menu bar
 void VideoPlayer::createActions()
 {
-    openAct = new QAction(tr("&Open..."), this);
-    openAct->setShortcut(tr("Ctrl+O"));
-    connect(openAct, SIGNAL(triggered()), this, SLOT(open()));
-
     printAct = new QAction(tr("&Print..."), this);
     printAct->setShortcut(tr("Ctrl+P"));
     printAct->setEnabled(false);
@@ -147,12 +143,6 @@ void VideoPlayer::createActions()
     fitToWindowAct->setCheckable(true);
     fitToWindowAct->setShortcut(tr("Ctrl+F"));
     connect(fitToWindowAct, SIGNAL(triggered()), this, SLOT(fitToWindow()));
-
-    aboutAct = new QAction(tr("&About"), this);
-    connect(aboutAct, SIGNAL(triggered()), this, SLOT(about()));
-
-    aboutQtAct = new QAction(tr("About &Qt"), this);
-    connect(aboutQtAct, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
 }
 
 //Came from QT tutorial linked in lab pdf
@@ -207,4 +197,3 @@ void VideoPlayer::play(char* source, int length){
 
 
 }
-

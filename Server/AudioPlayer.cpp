@@ -15,7 +15,7 @@ AudioPlayer::AudioPlayer(char* playbackHardware) {
     buffer = (char *) malloc(bufferSize);
 }
 
-void AudioPlayer::~AudioPlayer(){
+AudioPlayer::~AudioPlayer(){
     ai->close();
     delete ai;
 }
@@ -28,5 +28,3 @@ void AudioPlayer::play(char* source, int length) {
         ai->write(buffer, size);
     }
 }
-
-
