@@ -20,12 +20,14 @@ void runAudio(char* audioDeviceName, char* port){
 }
 
 void runVideo(char* port){
+    int argc = 0;
+    char* argv[];
     QApplication a(argc, argv);
     VideoPlayer player;
-    w.show();
+    player.show();
     NetworkListener videoListener(port, player);
     videoListener.getDataFromClient();
-    return a.exec();
+    a.exec();
 
 
 
