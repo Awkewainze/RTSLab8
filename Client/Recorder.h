@@ -11,13 +11,15 @@
 
 class Recorder {
 public:
-    virtual void start();
-    virtual void stop();
-    virtual std::thread* getThread();
-    virtual void record();
-    virtual void getData();
-    std::thread* thread;
+
+    virtual void start() = 0;
+    virtual void stop() = 0;
+    virtual void getThread() = 0;
+    virtual void record() = 0;
+    virtual void getData() = 0;
+    std::thread thread;
     bool threadRunning;
+    NetworkSender* sender;
 };
 
 

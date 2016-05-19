@@ -12,8 +12,9 @@
 #include <netdb.h>
 #include <string.h>
 #include <stdlib.h>
-//#include "Recorder.h"
-//#include "AudioRecorder.h"
+#include <ws2tcpip.h>
+#include "Recorder.h"
+#include "AudioRecorder.h"
 class NetworkSender {
 
 public:
