@@ -1,32 +1,27 @@
+// Created by baumgartd on 5/18/2016.
 //
-// Created by root on 5/13/16.
-//
 
-#ifndef CLIENT_VIDEORECORDER_H
-#define CLIENT_VIDEORECORDER_H
+#ifndef RTSLAB8_VIDEORECORDER_H
+#define RTSLAB8_VIDEORECORDER_H
 
-
-#include "Recorder.h"
 #include <opencv2/opencv.hpp>
-
+#include<mutex>
+#include "Recorder.h"
+#include "NetworkSender.h"
 using namespace cv;
+using namespace std;
 
 class VideoRecorder : Recorder {
 public:
-    VideoRecorder(char*, int);
+    VideoCapture  *capture;
+    std::mutex cameraMutex;
+    int height;
+    int width;
+
+    VideoRecorder(int,int,NetworkSender*);
     ~VideoRecorder();
     void record();
-    void getThread();
-    void start();
+    bool kill;
     void stop();
-    void getData();
-private:
-    VideoCapture *camera;
-    bool running;
-    char* buffer;
-    int bufferSize;
-    int secondsToCapture;
 };
-
-
-#endif //CLIENT_VIDEORECORDER_H
+#endif //RTSLAB8_VIDEORECORDER_H

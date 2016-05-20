@@ -5,8 +5,6 @@
 #ifndef CLIENT_RECORDER_H
 #define CLIENT_RECORDER_H
 
-
-#include <thread>
 #include "NetworkSender.h"
 class NetworkSender;
 class Recorder {

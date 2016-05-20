@@ -14,6 +14,7 @@
 #include <stdlib.h>
 #include "Recorder.h"
 #include "AudioRecorder.h"
+#include <unistd.h>
 class NetworkSender {
 
 public:

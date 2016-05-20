@@ -1,67 +1,42 @@
-//
-// Created by root on 5/13/16.
+// Created by baumgartd on 5/18/2016.
 //
 
 #include "VideoRecorder.h"
-#include "opencv2/opencv.hpp"
 #include <iostream>
-
-using namespace std;
 using namespace cv;
+using namespace std;
 
-VideoRecorder::VideoRecorder(char *, int) {
-    running = true;
-    buffer = new char[bufferSize];
+VideoRecorder::VideoRecorder(int h, int w, NetworkSender *networkSender) {
+    height = h;
+    width = w;
+    kill = false;
+
+    capture = new VideoCapture(0);
+    capture->set(CV_CAP_PROP_FRAME_WIDTH,width);
+    capture->set(CV_CAP_PROP_FRAME_HEIGHT,height);
+
+    sender = networkSender;
 }
-
 VideoRecorder::~VideoRecorder() {
-    delete [] buffer;
-    delete camera;
+    delete(capture);
 }
-
 void VideoRecorder::record() {
-
-}
-
-void VideoRecorder::getThread() {
-
-}
-
-void VideoRecorder::start(){
-    running = true;
-    if(!camera->isOpened()){
-        cout << "Error opening video stream or file" << endl;
-        return;
+    if(!capture->isOpened()){
+        cout << "Failed to connect to the camera" << endl;
+        exit(-1);
     }
-
-    double frame_width=camera->get(CV_CAP_PROP_FRAME_WIDTH);
-    double frame_height=camera->get(CV_CAP_PROP_FRAME_HEIGHT);
-    VideoWriter video("out.avi", CV_FOURCC('M','J','P','G'), 10, Size((int)frame_width,(int)frame_height), true);
-
-    while(running){
+    while(!kill) {
 
         Mat frame;
-        *camera >> frame;
-        video.write(frame);
-        imshow( "Frame", frame );
+        bool success = capture->read(frame);
+        if (!success) {
+            cout << "Cannot read a frame from video stream" << endl;
+            break;
+        }
+        char *data = reinterpret_cast<char*>(frame.data);
+        sender->sendDataToServer(data);
     }
 }
-
 void VideoRecorder::stop() {
-    running = false;
+    kill = true;
 }
-
-void VideoRecorder::getData() {
-    Recorder::getData();
-}
-
-
-
-
-
-
-
-
-
-
-
