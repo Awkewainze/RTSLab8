@@ -2,7 +2,6 @@
 // Created by baumgartd on 5/18/2016.
 //
 
-#include "VideoRcorder.h"
 #include "VideoRecorder.h"
 #include <iostream>
 using namespace cv;
@@ -27,16 +26,15 @@ void VideoRecorder::record() {
         cout << "Failed to connect to the camera" << endl;
         exit(-1);
     }
-    clock_t time = clock();
     while(!kill) {
 
         Mat frame;
-        bool success = capture.read(frame);
+        bool success = capture->read(frame);
         if (!success) {
             cout << "Cannot read a frame from video stream" << endl;
             break;
         }
-        char *data = frame.data;
+        char *data = reinterpret_cast<char*>(frame.data);
         sender->sendDataToServer(data);
     }
 }
