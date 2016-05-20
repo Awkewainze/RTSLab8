@@ -8,7 +8,7 @@
 
 class Player {
 public:
-    virtual void play(char* source, int length);
+    virtual void play(char* source, int length) = 0;
 
 };
 

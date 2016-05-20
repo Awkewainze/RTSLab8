@@ -47,13 +47,3 @@ void AudioRecorder::record() {
         threadRunning = false;
     }
 }
-
-std::thread AudioRecorder::getThread() {
-    return thread;
-}
-void AudioRecorder::stop() {
-    threadRunning = false;
-}
-void AudioRecorder::start() {
-    thread (record);
-}

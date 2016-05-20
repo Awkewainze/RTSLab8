@@ -175,7 +175,7 @@ void VideoPlayer::adjustScrollBar(QScrollBar *scrollBar, double factor)
 }
 
 void VideoPlayer::play(char* source, int length){
-
+    std::cout << "Video - Length: " << length << " Message: " << source << std::endl;
     QPixmap pixmap = QPixmap::fromImage(
             QImage(
                     (unsigned char *) source,

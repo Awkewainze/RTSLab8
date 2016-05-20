@@ -17,11 +17,11 @@
 
 class NetworkListener {
 public:
-    NetworkListener(const char* port, Player player);
+    NetworkListener(const char* port, Player* player);
     void getDataFromClient();
 private:
     void error(char* msg);
-    Player player;
+    Player* player;
     char buffer[256];
     int socketFd;
     int socketPort;

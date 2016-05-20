@@ -20,7 +20,6 @@ TEMPLATE = app
 SOURCES += main.cpp\
     AudioPlayer.cpp \
     VideoPlayer.cpp \
-    Player.cpp \
     NetworkListener.cpp \
     AudioInterface.cpp
 

@@ -3,9 +3,11 @@
 //
 
 #include "NetworkListener.h"
+#include <iostream>
 
 
-NetworkListener::NetworkListener(const char* port, Player player) {
+NetworkListener::NetworkListener(const char* port, Player* player) {
+    this->player = player;
     socketFd = socket(AF_INET, SOCK_STREAM, 0);
 
     // If the return is less than 0, then the socket failed to create.
@@ -25,7 +27,7 @@ NetworkListener::NetworkListener(const char* port, Player player) {
     serv_addr.sin_addr.s_addr = INADDR_ANY;
     serv_addr.sin_port = htons(socketPort);
     // Bind the socket appropriately.
-    if (bind(socketFd, (struct sockaddr *) &serv_addr,   sizeof(serv_addr)) < 0)
+    if (bind(socketFd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0)
     {
         error("ERROR on binding");
     }
@@ -37,6 +39,7 @@ NetworkListener::NetworkListener(const char* port, Player player) {
 }
 
 void NetworkListener::getDataFromClient() {
+    std::cout << "Listening" << std::endl;
     // Listen on the socket for an incoming connection.  The parameter is the number of connections that can be waiting / queued up.  5 is the maximum allowed by most systems.
     listen(socketFd, 5);
     clilen = sizeof(cli_addr);
@@ -45,6 +48,7 @@ void NetworkListener::getDataFromClient() {
     newsockfd = accept(socketFd,
                        (struct sockaddr *) &cli_addr,
                        &clilen);
+    std::cout << "Connection Accepted" << std::endl;
     // If the return is less than 0l, there is an error.
     if (newsockfd < 0) {
         error("ERROR on accept");
@@ -56,9 +60,13 @@ void NetworkListener::getDataFromClient() {
         // Read from the buffer when data arrives.  The max that can be read is 255.
         int n = read(newsockfd, buffer, sizeof(buffer) - 1);
         if (n < 0) { error("ERROR reading from socket"); }
+        if(n == 0)
+            break;
 
-        player.play(buffer, n);
+        player->play(buffer, n);
     }
+
+    std::cout << "End of data stream" << std::endl;
 }
 
 /*

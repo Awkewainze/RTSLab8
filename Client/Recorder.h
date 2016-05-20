@@ -8,15 +8,10 @@
 
 #include <thread>
 #include "NetworkSender.h"
-
+class NetworkSender;
 class Recorder {
 public:
-
-    virtual void start() = 0;
-    virtual void stop() = 0;
-    virtual void getThread() = 0;
     virtual void record() = 0;
-    virtual void getData() = 0;
     std::thread thread;
     bool threadRunning;
     NetworkSender* sender;

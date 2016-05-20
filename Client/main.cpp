@@ -19,7 +19,7 @@ int main(int argc, char*argv[]) {
         exit(-1);
     }
     NetworkSender *sender = new NetworkSender(argv[2],argv[3]);
-    AudioRecorder audioRecorder(argv[1],atoi(argv[4]),sender);
+    AudioRecorder audioRecorder(*argv[1],atoi(argv[4]),*sender);
     VideoRecorder videoRecorder(240,160,sender);
 
     std::thread audioThread (audioRecorder.record());

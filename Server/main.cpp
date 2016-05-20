@@ -15,7 +15,7 @@ using namespace std;
 
 void runAudio(char* audioDeviceName, char* port){
     AudioPlayer player(audioDeviceName);
-    NetworkListener audioListener(port, player);
+    NetworkListener audioListener(port, &player);
 
     audioListener.getDataFromClient();
 }
@@ -26,10 +26,9 @@ void runVideo(char* port){
     QApplication a(argc, argv);
     VideoPlayer player;
     player.show();
-    NetworkListener videoListener(port, player);
-    videoListener.getDataFromClient();
+    NetworkListener videoListener(port, &player);
     a.exec();
-
+    videoListener.getDataFromClient();
 
 
    // videoListener.getDataFromClient();
@@ -41,10 +40,10 @@ int main(int argc, char** argv) {
 
 
     thread audio(runAudio, argv[1], argv[2]);
-    thread video(runVideo, argv[3]);
+//    thread video(runVideo, argv[3]);
 
     audio.join();
-    video.join();
+//    video.join();
 
     return 0;
 }
