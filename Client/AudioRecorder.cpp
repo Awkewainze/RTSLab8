@@ -6,11 +6,11 @@
 #include "AudioRecorder.h"
 #include <alsa/asoundlib.h>
 #include <thread>
-
+#include <iostream>
 #define SAMPLING_RATE (22500)
 #define NUMBER_OF_CHANNELS (2)
 #define BYTES_PER_SAMPLE (2)
-
+using namespace std;
 AudioRecorder::AudioRecorder(char *deviceName, int duration,NetworkSender *networkSender) {
     ai = new AudioInterface(deviceName,SAMPLING_RATE,NUMBER_OF_CHANNELS,SND_PCM_STREAM_CAPTURE);
     ai->open();
@@ -32,16 +32,14 @@ void AudioRecorder::record() {
             memset(buffer, 0, bufferSize);
 
             // Capture from the sound card
-            ai->read(buffer);
+            int readSize =  ai->read(buffer);
 
             //Send capture to server
-            sender->sendDataToServer(buffer);
+            sender->sendDataToServer(buffer,readSize);
 
             //Reduce bytes needed to capture
             bytesToCapture-=bufferSize;
 
 
         } while ((bytesToCapture > 0)&&(rc>0));
-        threadRunning = false;
-    }
 }

@@ -1,3 +1,4 @@
+//
 // Created by baumgartd on 5/18/2016.
 //
 
@@ -28,13 +29,14 @@ void VideoRecorder::record() {
     while(!kill) {
 
         Mat frame;
+
         bool success = capture->read(frame);
         if (!success) {
             cout << "Cannot read a frame from video stream" << endl;
             break;
         }
         char *data = reinterpret_cast<char*>(frame.data);
-        sender->sendDataToServer(data);
+        sender->sendDataToServer(data,480 * 480 *3);
     }
 }
 void VideoRecorder::stop() {

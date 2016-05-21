@@ -1,3 +1,4 @@
+//
 // Created by baumgartd on 5/18/2016.
 //
 
@@ -17,7 +18,7 @@ public:
     std::mutex cameraMutex;
     int height;
     int width;
-
+   
     VideoRecorder(int,int,NetworkSender*);
     ~VideoRecorder();
     void record();
@@ -25,3 +26,4 @@ public:
     void stop();
 };
 #endif //RTSLAB8_VIDEORECORDER_H
+

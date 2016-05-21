@@ -6,12 +6,10 @@
 #define CLIENT_RECORDER_H
 
 #include "NetworkSender.h"
-class NetworkSender;
+
 class Recorder {
 public:
     virtual void record() = 0;
-    std::thread thread;
-    bool threadRunning;
     NetworkSender* sender;
 };
 

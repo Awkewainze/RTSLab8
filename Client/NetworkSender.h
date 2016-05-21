@@ -12,14 +12,12 @@
 #include <netdb.h>
 #include <string.h>
 #include <stdlib.h>
-#include "Recorder.h"
-#include "AudioRecorder.h"
 #include <unistd.h>
 class NetworkSender {
 
 public:
     NetworkSender(const char *ip, const char *port);
-    void sendDataToServer(char*);
+    void sendDataToServer(char*,int);
 private:
     void error(char* msg);
     char buffer[256];

@@ -3,6 +3,8 @@
 //
 
 #include "NetworkSender.h"
+#include <iostream>
+using namespace std;
 NetworkSender::NetworkSender(const char *ip,const char *p) {
     //obtain port number
     port = atoi(p);
@@ -38,9 +40,9 @@ NetworkSender::NetworkSender(const char *ip,const char *p) {
         error("ERROR connecting");
 }
 
-void NetworkSender::sendDataToServer(char *data) {
+void NetworkSender::sendDataToServer(char *data,int dataSize) {
     //Send the data
-    return_val = write(sock_fd,data,strlen(data));
+    return_val = write(sock_fd,data,dataSize);
 
     if (return_val < 0)
         error("ERROR reading from socket");
