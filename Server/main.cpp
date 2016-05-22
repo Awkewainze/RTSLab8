@@ -25,8 +25,6 @@ void runAudio(char* audioDeviceName, char* port){
 void runVideo(char* port, vidPlayer* p){
     NetworkListener videoListener(port, p);
     videoListener.getDataFromClient();
-
-   // videoListener.getDataFromClient();
 }
 
 
@@ -37,11 +35,11 @@ int main(int argc, char** argv) {
     vidPlayer p(&player);
     player.show();
 
-//    thread audio(runAudio, argv[1], argv[2]);
+    thread audio(runAudio, argv[1], argv[2]);
     thread video(runVideo, argv[3], &p);
 
     a->exec();
-//    audio.join();
+    audio.join();
     video.join();
 
     return 0;
