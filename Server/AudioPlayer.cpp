@@ -27,12 +27,12 @@ AudioPlayer::~AudioPlayer(){
 void AudioPlayer::play(char* source, int length) {
     std::cout << "Audio - Length: " << length << " Message: " << source << std::endl;
     std::cout << "Buffer size: " << bufferSize << std::endl;
-    ai->write(buffer, length);
-//    for(int i = 0; i < length; i += bufferSize){
-//        int size = bufferSize;
-//        if(i + bufferSize > length)
-//            size = length - i;
-//        buffer = source + i;
-//        ai->write(buffer, size);
-//    }
+//    ai->write(buffer, length);
+    for(int i = 0; i < length; i += bufferSize){
+        int size = bufferSize;
+        if(i + bufferSize > length)
+            size = length - i;
+        buffer = source + i;
+        ai->write(buffer, size);
+    }
 }

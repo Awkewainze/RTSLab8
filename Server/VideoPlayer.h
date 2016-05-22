@@ -23,13 +23,15 @@ class QMenu;
 class QScrollArea;
 class QScrollBar;
 
-class VideoPlayer : public QMainWindow, public Player{
+class VideoPlayer : public QMainWindow{
     Q_OBJECT
 public:
     VideoPlayer();
-    void play(char* source, int length);
     int image_width;
     int image_height;
+    void play(char*, int);
+signals:
+    void playSignal(char*, int);
 private slots:
     void print();
     void zoomIn();
@@ -37,12 +39,13 @@ private slots:
     void normalSize();
     void fitToWindow();
     void speak();
+    void updateImage(char* source, int length);
 private:
     void createActions();
     void updateActions();
     void scaleImage(double factor);
     void adjustScrollBar(QScrollBar *scrollBar, double factor);
-
+    char buffer[692100];
     QLabel *imageLabel;
     QScrollArea *scrollArea;
     double scaleFactor;

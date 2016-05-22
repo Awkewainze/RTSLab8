@@ -17,8 +17,8 @@
  */
 VideoPlayer::VideoPlayer()
 {
-    image_width = 100;
-    image_height = 100;
+    image_width = 480;
+    image_height = 480;
     imageLabel = new QLabel;
     imageLabel->setBackgroundRole(QPalette::Base);
     imageLabel->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
@@ -114,6 +114,8 @@ void VideoPlayer::fitToWindow()
 //Creates the actions and links the signals to slots for the menu bar
 void VideoPlayer::createActions()
 {
+   connect(this, SIGNAL(playSignal(char*, int)), this, SLOT(updateImage(char*, int)));
+
     printAct = new QAction(tr("&Print..."), this);
     printAct->setShortcut(tr("Ctrl+P"));
     printAct->setEnabled(false);
@@ -175,7 +177,12 @@ void VideoPlayer::adjustScrollBar(QScrollBar *scrollBar, double factor)
 }
 
 void VideoPlayer::play(char* source, int length){
-    std::cout << "Video - Length: " << length << " Message: " << source << std::endl;
+
+   emit playSignal(source, length);
+}
+
+void VideoPlayer::updateImage(char*source, int length){
+    std::cout << "Video - Length: " << length << std::endl;
     QPixmap pixmap = QPixmap::fromImage(
             QImage(
                     (unsigned char *) source,
@@ -193,7 +200,5 @@ void VideoPlayer::play(char* source, int length){
 
     if (!fitToWindowAct->isChecked())
         imageLabel->adjustSize();
-
-
 
 }

@@ -5,6 +5,7 @@
 #include "VideoPlayer.h"
 #include "Player.h"
 #include <thread>
+#include "vidPlayer.h"
 
 using namespace std;
 // Computer
@@ -13,6 +14,7 @@ using namespace std;
 // Play sound
 // From network
 
+
 void runAudio(char* audioDeviceName, char* port){
     AudioPlayer player(audioDeviceName);
     NetworkListener audioListener(port, &player);
@@ -20,16 +22,9 @@ void runAudio(char* audioDeviceName, char* port){
     audioListener.getDataFromClient();
 }
 
-void runVideo(char* port){
-    int argc = 0;
-    char* argv[0];
-    QApplication a(argc, argv);
-    VideoPlayer player;
-    player.show();
-    NetworkListener videoListener(port, &player);
-    a.exec();
+void runVideo(char* port, vidPlayer* p){
+    NetworkListener videoListener(port, p);
     videoListener.getDataFromClient();
-
 
    // videoListener.getDataFromClient();
 }
@@ -37,13 +32,17 @@ void runVideo(char* port){
 
 // run with 'avserver <audio playback hardware> <audio port> <video port>'
 int main(int argc, char** argv) {
+    QApplication *a = new QApplication(argc, argv);
+    VideoPlayer player;
+    vidPlayer p(&player);
+    player.show();
 
+//    thread audio(runAudio, argv[1], argv[2]);
+    thread video(runVideo, argv[3], &p);
 
-    thread audio(runAudio, argv[1], argv[2]);
-//    thread video(runVideo, argv[3]);
-
-    audio.join();
-//    video.join();
+    a->exec();
+//    audio.join();
+    video.join();
 
     return 0;
 }

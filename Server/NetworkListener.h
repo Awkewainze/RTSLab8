@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "Player.h"
-#include "VideoPlayer.h"
+#include "vidPlayer.h"
 #include "AudioPlayer.h"
 
 
@@ -22,7 +22,7 @@ public:
 private:
     void error(char* msg);
     Player* player;
-    char buffer[256];
+    char buffer[691200];
     int socketFd;
     int socketPort;
     int newsockfd;
